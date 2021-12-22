@@ -1,12 +1,11 @@
 package com.company.weather.data;
 
-import com.company.weather.db.SQLConect;
+import com.company.weather.db.DBUsedQueries;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,17 +44,19 @@ public final class GetWeather {
     // Method that returns weather data from a database or from a website
     public static int getCurrentWeather() {
         int currentWeather = 1;
+
         // We get the current date and convert it to the required format
         Date dt = new Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
 
         try {
             // Database connection
-            SQLConect db = new SQLConect();
+            DBUsedQueries db = new DBUsedQueries();
+
             // Request to check if there is a record in the database with the current date
-            db.SQLQuery("SELECT * FROM weather_history WHERE weather_date ='"+formatForDateNow.format(dt)+"'");
+            db.sqlUsedSelectWeatherHistoryCheck(dt);
+
             // Checking the presence of data in the database
-            if (db.notNullResurlt()){
+            if (db.notNullResult()){
                 System.out.println("Data found in database");
                 currentWeather = Integer.parseInt(db.getStringResult("weather_value"));
             } else {
@@ -63,7 +64,7 @@ public final class GetWeather {
                 // Getting data from the site
                 currentWeather = getDateWeather();
                 // Creating a record about the current weather in the database
-                db.SQLQuery("INSERT INTO weather_history(weather_date, weather_value)VALUES ('"+formatForDateNow.format(dt)+"', "+currentWeather+")");
+                db.sqlUsedInsertNewWeather(dt,currentWeather);
             }
         } catch (Exception e){
             System.out.println(e.getMessage());

@@ -3,13 +3,18 @@ package com.company.weather.db;
 import java.sql.*;
 
 public class SQLConect {
-    private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/Weather";
-    private static final String USER = "postgres";
-    private static final String PASS = "root";
+    protected static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/Weather";
+    protected static final String USER = "postgres";
+    protected static final String PASS = "root";
 
-    private Connection connection;
-    private Statement statement;
-    private ResultSet resultSet;
+    protected Connection connection;
+    protected Statement statement;
+    protected PreparedStatement preparedStatement;
+    protected ResultSet resultSet;
+
+
+
+
 
     // Database Connection Designer
     public SQLConect(){
@@ -46,10 +51,12 @@ public class SQLConect {
         }
     }
 
+
     // A method that implements sending a request to the database and storing the result into a connection object
     public void SQLQuery(String query) throws SQLException{
         if (statement != null) statement = null;
         try {
+
             statement = connection.createStatement();
 
             //Executing a request
@@ -61,7 +68,7 @@ public class SQLConect {
     }
 
     // Method for checking the receipt of data from the database
-    public boolean notNullResurlt() throws SQLException {
+    public boolean notNullResult() throws SQLException {
         return resultSet.next();
     }
 
