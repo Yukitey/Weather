@@ -52,9 +52,8 @@ public final class GetWeather {
             // Database connection
             DBUsedQueries db = new DBUsedQueries();
 
-            // Request to check if there is a record in the database with the current date
+            // Checking if there is a record in the database with the current date
             db.sqlUsedSelectWeatherHistoryCheck(dt);
-
             // Checking the presence of data in the database
             if (db.notNullResult()){
                 System.out.println("Data found in database");

@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class DBUsedQueries extends SQLConect{
 
+    // Execution of the request whether there is data on the specified date
     public void sqlUsedSelectWeatherHistoryCheck(Date dt) {
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -19,7 +20,7 @@ public class DBUsedQueries extends SQLConect{
             System.out.println(e.getMessage());
         }
     }
-
+    // Executing a request to add a record about the current weather to the database
     public void sqlUsedInsertNewWeather(Date dt, int weatherValues){
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
         try {
